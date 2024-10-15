@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    User Info
+{% endblock %}
+
+{% block main %}
+<link href="/static/styles.css" rel="stylesheet">
+<script src="{{ url_for('static', filename='index_script.js') }}"></script>
+    <h1>{{ username }}'s Passwords</h1>
+    <div class="container">
+        <section id="passwords">
+            <table style="margin: 0 auto; width: 75%;">
+                <thead>
+                    <tr>
+                        <th style="border: 2px solid black;">Acounts</th>
+                        <th style="border: 2px solid black;">Passwords</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for acc in user_accounts %}
+                    <tr>
+                        <td style="border: 2px solid black;">{{  acc.account_name  }}</td>
+                        <td style="border: 2px solid black;">{{  acc.password  }}</td>
+                    </tr>
+                    {% endfor %}
+                </body>
+            </table>
+        </section>
+    </div>
+    <section id="form-section">
+        <div class="form-container">
+            <h3>Remove an Account</h3>
+            <form action="/" method="post" class="form-inline">
+                <select name="account_id">
+                    <option value="" selected disabled>Select an Option</option>
+                    {% for account in accounts %}
+                    <option value="{{ account.id }}">{{ account.account_name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="action" value="remove">
+                <button style="margin: 1em;" type="submit">Remove</button>
+            </form>
+        </div>
+        <div class="form-container">
+            <h3>Update a Password</h3>
+            <form action="/" method="post" class="form-inline">
+                <select name="account_id">
+                    <option value="" selected disabled>Select an Option</option>
+                    {% for account in accounts %}
+                    <option value="{{ account.id }}">{{ account.account_name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="password" name="update_password" placeholder="Enter new password" id="update_password" autocomplete="update_password">
+                <input type="hidden" name="action" value="update">
+                <button type="submit">Update</button>
+                <div><span style="padding: 10px;" id="password-strength-update"></span></div>
+            </form>
+        </div>
+        <div class="form-container">
+            <h3>Add a New Account</h3>
+            <form action="/" method="post" class="form-inline">
+                <input type="text" name="new_account" placeholder="Enter account name">
+                <input type="password" name="new_password" placeholder="Enter password" id="new_password" autocomplete="new_password">
+                <input type="hidden" name="action" value="add_password">
+                <button style="margin: 1em;" type="submit">Add</button>
+                <div><span style="padding: 10px;" id="password-strength-new"></span></div>
+            </form>
+        </div>
+        <div class="form-container">
+            <h3>Generate a New Password</h3>
+            <form action="/" method="post" class="form-inline">
+                <div style="border: 1px solid black; padding: 10px; margin: 0 auto;" name="generated_password">Password: {{ generated_password }}</div>
+                <input type="hidden" name="action"
+                value="generate_password">
+                <button style="margin: 1em;" type="submit">Generate</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

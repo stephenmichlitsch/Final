@@ -1,0 +1,7 @@
+.form-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 400px; /* Adjust as needed */
+    padding: 10px;
+    margin: 0 auto;
+}
